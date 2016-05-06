@@ -89,14 +89,12 @@ void IntroScreen::render(sf::Int32 elapsed, sf::RenderWindow *window) {
   // define a circle with radius = 200
   sf::CircleShape circle(3);
   circle.setFillColor(sf::Color(255, 255, 255, 128));
-  // change the radius to 40
-  // circle.setRadius(40);
 
-  // change the number of sides (points) to 100
-  // circle.setPointCount(100);
-  // sf::Texture& back{core::States::getInstance()->getTexture(bg_img)};
   std::vector<StarField::pos> &stars{field.getStars()};
   for (auto star : stars) {
+    circle.setRadius(3 - static_cast<int>(star.z / 50));
+    sf::Uint8 c = 255 - static_cast<int>(star.z);
+    circle.setFillColor(sf::Color(c, c, c, c));
     circle.setPosition(static_cast<float>(star.tx),
                        static_cast<float>(star.ty));
     window->draw(circle);
