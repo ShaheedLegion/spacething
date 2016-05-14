@@ -79,11 +79,11 @@ void GameScreen::handleKey(sf::Keyboard::Key key) {
 }
 
 void GameScreen::render(sf::Int32 elapsed, sf::RenderWindow *window) {
-  /*
+
   std::pair<float, float> p;
   core::States::getInstance()->getMousePos(p);
-  texture.setPosition(p.first, p.second);
-  */
+  player.setPosition(p.first, p.second);
+
   planes.update(window->getSize().x, window->getSize().y);
 
   // background.setColor(sf::Color());
@@ -103,6 +103,5 @@ void GameScreen::render(sf::Int32 elapsed, sf::RenderWindow *window) {
     }
   }
   window->draw(player);
-  // window->draw(text);
 }
 }
