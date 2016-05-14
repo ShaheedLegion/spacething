@@ -19,8 +19,13 @@ static void print(const std::string &output) {
 static void print_int(int v) { std::cout << v << std::endl; }
 static void print_float(float v) { std::cout << v << std::endl; }
 
+class ISignalHelper {
+public:
+  virtual void signalNextScreen() = 0;
+};
+
 // This class is a singleton.
-class States {
+class States : public ISignalHelper {
 private:
   static States *instance;
   std::vector<Screen *> states;
@@ -58,6 +63,9 @@ public:
   void addScreen(Screen *screen);
 
   void render(sf::Clock &clock);
+
+  virtual void signalNextScreen() override;
+  void handleKey(sf::Keyboard::Key key);
 };
 } // namespace core
 

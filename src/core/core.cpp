@@ -78,4 +78,23 @@ void States::getMousePos(std::pair<float, float> &p) {
   p.second = y;
 }
 
+void States::signalNextScreen() {
+  // We could do wrap around on this, or add more complex logic.
+  if (states.empty())
+    return;
+
+  if (++currentState > states.size() - 1)
+    currentState = 0;
+}
+
+void States::handleKey(sf::Keyboard::Key key) {
+  if (states.empty())
+    return;
+
+  if (currentState < 0 || currentState > states.size())
+    return;
+
+  states[currentState]->handleKey(key);
+}
+
 } // namespace core

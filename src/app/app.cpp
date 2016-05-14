@@ -4,6 +4,7 @@
 
 // Include the screens we are going to use for this game.
 #include "app/intro_screen.h"
+#include "app/game_screen.h"
 
 int main() {
   core::print("Starting up.");
@@ -25,7 +26,8 @@ int main() {
   // Perform setup.
   core::States *states{core::States::getInstance()};
   states->setWindow(&window);
-  states->addScreen(new app::IntroScreen(&window));
+  states->addScreen(new app::IntroScreen(states, &window));
+  states->addScreen(new app::GameScreen(states, &window));
 
   // Create a clock for measuring the time elapsed
   sf::Clock clock;
@@ -36,10 +38,12 @@ int main() {
       if (event.type == sf::Event::Closed)
         window.close();
 
-      if ((event.type == sf::Event::KeyPressed) &&
-          (event.key.code == sf::Keyboard::Escape))
-        window.close();
-
+      if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Escape)
+          window.close();
+        else
+          states->handleKey(event.key.code);
+      }
       if (event.type == sf::Event::Resized)
         states->resized();
     }

@@ -29,16 +29,14 @@ public:
 };
 
 class IntroScreen : public core::Screen {
-
-  // sf::Sprite background;
   sf::Text text;
-  sf::Sprite texture;
   StarField field;
 
 public:
-  IntroScreen(sf::RenderWindow *window);
+  IntroScreen(core::ISignalHelper *helper, sf::RenderWindow *window);
   ~IntroScreen();
 
+  virtual void handleKey(sf::Keyboard::Key key) override;
   virtual void render(sf::Int32 elapsed, sf::RenderWindow *window) override;
 };
 }

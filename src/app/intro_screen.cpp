@@ -3,30 +3,21 @@
 
 namespace app {
 
-// const std::string bg_img = "resources/background.jpg";
 const std::string font_name = "resources/sansation.ttf";
-const std::string texture_name = "resources/texture.png";
 
 IntroScreen::~IntroScreen() {}
 
-IntroScreen::IntroScreen(sf::RenderWindow *window)
-    : core::Screen(), field(200) {
+IntroScreen::IntroScreen(core::ISignalHelper *helper, sf::RenderWindow *window)
+    : core::Screen(helper), field(200) {
   core::States *states{core::States::getInstance()};
 
-  // states->addTexture(bg_img);
-  // background.setTexture(states->getTexture(bg_img));
-  /*
   states->addFont(font_name);
   sf::Font &font = states->getFont(font_name);
 
   // Create some text to draw on top of our stuff.
-  text = sf::Text("SpaceThing Demo", font);
+  text = sf::Text("Press any key to continue...", font);
   text.setColor(sf::Color(255, 255, 255, 170));
   text.setPosition(250.f, 450.f);
-
-  states->addTexture(texture_name);
-  texture.setTexture(states->getTexture(texture_name));
-  */
 }
 
 StarField::StarField(int numStars) {
@@ -77,6 +68,11 @@ void StarField::update(int w, int h) {
   }
 }
 
+void IntroScreen::handleKey(sf::Keyboard::Key key) {
+  if (helper != nullptr)
+    helper->signalNextScreen();
+}
+
 void IntroScreen::render(sf::Int32 elapsed, sf::RenderWindow *window) {
   /*
   std::pair<float, float> p;
@@ -85,8 +81,6 @@ void IntroScreen::render(sf::Int32 elapsed, sf::RenderWindow *window) {
   */
   field.update(window->getSize().x, window->getSize().y);
 
-  // background.setColor(sf::Color());
-  // define a circle with radius = 200
   sf::CircleShape circle(3);
   circle.setFillColor(sf::Color(255, 255, 255, 128));
 
@@ -100,7 +94,6 @@ void IntroScreen::render(sf::Int32 elapsed, sf::RenderWindow *window) {
     window->draw(circle);
   }
 
-  // window->draw(texture);
-  // window->draw(text);
+  window->draw(text);
 }
 }
